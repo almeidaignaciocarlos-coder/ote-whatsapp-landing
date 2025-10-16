@@ -8,8 +8,9 @@
 <meta name="theme-color" content="#25D366" />
 <style>
   :root{
-    --azul:#0F4C97; --verde:#25D366; --bg:#F6F7FB; --txt:#0F172A; --mut:#64748B;
-    --card:#fff; --b:#E5E7EB; --r:18px; --shadow:0 14px 36px rgba(2,6,23,.10);
+    --brand:#0F4C97; --brand2:#2F78D1; --wa:#25D366;
+    --txt:#0F172A; --mut:#64748B; --bg:#F6F7FB; --card:#fff; --b:#E5E7EB;
+    --r:20px; --shadow:0 14px 36px rgba(2,6,23,.10);
   }
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial}
@@ -18,9 +19,9 @@
 
   .nav{display:flex;align-items:center;justify-content:space-between;margin:6px 0 18px}
   .brand{display:flex;gap:10px;align-items:center}
-  .escudo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0F4C97,#2F78D1);display:grid;place-items:center;color:#fff;font-weight:900}
+  .escudo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-weight:900}
   .titulo{font-weight:800}
-  .subtitulo{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.12em}
+  .subtexto{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.12em}
 
   .hero{
     background:
@@ -30,41 +31,51 @@
     border:1px solid var(--b);border-radius:28px;padding:28px;box-shadow:var(--shadow)
   }
   .grid{display:grid;gap:22px;align-items:center}
-  @media (min-width:900px){.grid{grid-template-columns:1.05fr .95fr}}
-  h1{font-size:clamp(28px,4.2vw,44px);line-height:1.08;margin:0 0 8px}
-  p{margin:0 0 10px;color:var(--mut)}
+  @media (min-width:980px){.grid{grid-template-columns:1.05fr .95fr}}
+  h1{font-size:clamp(28px,4.2vw,44px);line-height:1.08;margin:0 0 10px}
+  p{margin:0 0 12px;color:var(--mut)}
   .kicker{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.14em}
 
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
   .btn{display:inline-flex;gap:10px;align-items:center;padding:12px 16px;border-radius:12px;font-weight:800;border:1px solid var(--b);background:#fff}
-  .btn.primary{background:var(--verde);color:#053B1E;border-color:transparent;box-shadow:var(--shadow)}
+  .btn.primary{background:var(--wa);color:#053B1E;border-color:transparent;box-shadow:var(--shadow)}
   .btn:hover{filter:brightness(1.04)}
 
-  .card{background:var(--card);border:1px solid var(--b);border-radius:20px;padding:16px;box-shadow:var(--shadow)}
-  .row{display:flex;gap:14px;align-items:center}
-  .robot{width:106px;height:106px}
-  .bubble{background:#F0FFF8;border:1px solid #B7F7CE;border-radius:14px;padding:10px 12px;color:#065F46;font-size:14px}
+  .card{background:var(--card);border:1px solid var(--b);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+  .right{display:grid;place-items:center}
 
-  /* Robot animación */
-  .arm{transform-origin:90px 40px;animation:wave 3.2s ease-in-out infinite}
-  @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-10deg)}20%{transform:rotate(12deg)}30%{transform:rotate(-8deg)}40%{transform:rotate(10deg)}50%{transform:rotate(-6deg)}}
+  /* ====== ROBOT AVATAR ====== */
+  .robot-wrap{position:relative}
+  .bot-shadow{
+    position:absolute;left:50%;transform:translateX(-50%);
+    bottom:-6px;width:160px;height:22px;border-radius:50%;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 65%);
+    filter:blur(2px);animation:shadow-bob 3.8s ease-in-out infinite;
+  }
+  @keyframes shadow-bob{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(0.96)}}
+
+  svg.robot{width:min(340px,60vw);height:auto;overflow:visible}
+  /* respiración */
+  .bot-breathe{animation:breathe 3.8s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  /* brazo saludo */
+  .arm-wave{transform-origin:210px 90px;animation:wave 3.2s ease-in-out infinite}
+  @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-12deg)}20%{transform:rotate(14deg)}30%{transform:rotate(-9deg)}40%{transform:rotate(10deg)}50%{transform:rotate(-6deg)}}
+  /* parpadeo ojos */
   .eye{transform-origin:center;animation:blink 5s infinite}
-  @keyframes blink{0%,2%,60%,100%{transform:scaleY(1)}1%{transform:scaleY(.1)}}
-  .bot-body{animation:breath 4s ease-in-out infinite}
-  @keyframes breath{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-  .typing{display:inline-flex;gap:4px;align-items:center;margin-left:6px}
-  .dot{width:6px;height:6px;border-radius:50%;background:#10B981;opacity:.4;animation:jump 1.2s infinite}
-  .dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
-  @keyframes jump{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(-4px);opacity:.9}}
+  @keyframes blink{0%,2%,60%,100%{transform:scaleY(1)}1%{transform:scaleY(.12)}}
+  /* antenna glow */
+  .antenna{animation:glow 1.8s ease-in-out infinite}
+  @keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(37,211,102,.0))}50%{filter:drop-shadow(0 0 8px rgba(37,211,102,.8))}}
+  /* head tilt */
+  .head{transform-origin:160px 82px;animation:tilt 6s ease-in-out infinite}
+  @keyframes tilt{0%,100%{transform:rotate(0)}50%{transform:rotate(-3deg)}}
 
-  .cols{display:grid;gap:14px;margin-top:22px}
-  @media (min-width:900px){.cols{grid-template-columns:repeat(3,1fr)}}
-  .card small{color:var(--mut)}
-
+  /* ====== PANEL MINI-CHAT ====== */
   .fab{position:fixed;right:18px;bottom:18px;z-index:60}
   .fab button{
     width:64px;height:64px;border:0;cursor:pointer;border-radius:50%;display:grid;place-items:center;
-    background:var(--verde);color:#053B1E;box-shadow:0 18px 40px rgba(37,211,102,.45);
+    background:var(--wa);color:#053B1E;box-shadow:0 18px 40px rgba(37,211,102,.45);
     font-size:26px;animation:pulse 2s infinite
   }
   @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
@@ -75,17 +86,15 @@
   }
   .panel.open{display:block}
   .panel-h{display:flex;gap:10px;align-items:center;margin-bottom:8px}
-  .badge{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#0F4C97,#2F78D1);display:grid;place-items:center;color:#fff;font-weight:800}
+  .badge{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-weight:800}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
   .chip{background:#EEF2F7;border:1px solid #E2E8F0;color:#0F172A;padding:6px 10px;border-radius:999px;font-size:13px;cursor:pointer}
-  .chip:hover{border-color:#0F4C97;color:#0F4C97}
+  .chip:hover{border-color:var(--brand);color:var(--brand)}
   .composer{display:flex;gap:8px;align-items:center}
   .composer input{flex:1;border:1px solid #CBD5E1;border-radius:12px;padding:10px 12px;font:inherit}
-  .send{background:#0F4C97;color:#fff;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
+  .send{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
   .send:hover{filter:brightness(1.05)}
   .counter{font-size:12px;color:var(--mut);text-align:right;margin-top:6px}
-
-  .footer{color:var(--mut);font-size:13px;text-align:center;padding:24px 0}
 </style>
 </head>
 <body>
@@ -95,7 +104,7 @@
         <div class="escudo">OB</div>
         <div>
           <div class="titulo">OTE-BOT · Asistente</div>
-          <div class="subtitulo">Atención por WhatsApp</div>
+          <div class="subtexto">ATENCIÓN POR WHATSAPP</div>
         </div>
       </div>
     </div>
@@ -104,7 +113,7 @@
       <div class="grid">
         <div>
           <div class="kicker">ChatBot · WhatsApp</div>
-          <h1>Habla con el asistente <br>al instante</h1>
+          <h1>Habla con el asistente al instante</h1>
           <p>Responde sobre <b>caja chica</b>, <b>horarios</b> y puede <b>derivar a un asesor humano</b>.</p>
 
           <div class="actions">
@@ -117,41 +126,92 @@
           <p class="kicker">Atención L–V 08:00–16:00</p>
         </div>
 
-        <div class="card">
-          <div class="row">
-            <!-- ROBOT -->
-            <svg class="robot" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <g class="bot-body">
-                <rect x="18" y="30" rx="20" ry="20" width="84" height="64" fill="#E6F8FF" stroke="#0EA5E9" />
-                <circle cx="60" cy="24" r="6" fill="#0EA5E9"/>
-                <rect class="arm" x="86" y="38" rx="6" width="10" height="26" fill="#0EA5E9" opacity=".9"/>
+        <div class="card right">
+          <div class="robot-wrap">
+            <!-- Sombra -->
+            <div class="bot-shadow"></div>
+
+            <!-- ROBOT SVG -->
+            <svg class="robot" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" aria-label="Avatar OTE-BOT">
+              <!-- cuerpo entero respira -->
+              <g class="bot-breathe">
+                <!-- Piernas -->
+                <g fill="#E6F0FA" stroke="#6B7280">
+                  <rect x="120" y="220" rx="12" ry="12" width="28" height="58"/>
+                  <rect x="172" y="220" rx="12" ry="12" width="28" height="58"/>
+                </g>
+                <!-- Pies -->
+                <g fill="#C7D2FE" stroke="#6B7280">
+                  <rect x="112" y="274" rx="12" width="44" height="16"/>
+                  <rect x="164" y="274" rx="12" width="44" height="16"/>
+                </g>
+
+                <!-- Cuerpo -->
+                <rect x="90" y="120" rx="22" ry="22" width="140" height="110" fill="url(#bodyGrad)" stroke="#64748B"/>
+                <!-- Detalle pecho -->
+                <circle cx="160" cy="178" r="16" fill="#E0E7FF" stroke="#94A3B8"/>
+                <rect x="144" y="192" rx="6" width="32" height="8" fill="#A5B4FC"/>
+
+                <!-- Brazo izquierdo -->
+                <g fill="#E6F0FA" stroke="#6B7280">
+                  <rect x="70" y="144" rx="10" width="28" height="70"/>
+                  <circle cx="84" cy="220" r="12" fill="#C7D2FE" stroke="#6B7280"/>
+                </g>
+
+                <!-- Brazo derecho (saludo) -->
+                <g class="arm-wave" fill="#E6F0FA" stroke="#6B7280">
+                  <rect x="222" y="140" rx="10" width="28" height="74"/>
+                  <circle cx="236" cy="220" r="12" fill="#C7D2FE" stroke="#6B7280"/>
+                </g>
+
+                <!-- Cabeza (inclina suave) -->
+                <g class="head">
+                  <rect x="110" y="60" rx="24" ry="24" width="100" height="68" fill="url(#headGrad)" stroke="#64748B"/>
+                  <!-- Ojos -->
+                  <circle class="eye" cx="138" cy="96" r="8" fill="#0F172A"/>
+                  <circle class="eye" cx="182" cy="96" r="8" fill="#0F172A"/>
+                  <!-- Sonrisa -->
+                  <path d="M140 108 Q160 122 180 108" stroke="#0F172A" stroke-width="4" fill="none" stroke-linecap="round"/>
+                  <!-- Antena -->
+                  <line x1="160" y1="58" x2="160" y2="36" stroke="#64748B" stroke-width="4"/>
+                  <circle class="antenna" cx="160" cy="30" r="8" fill="#25D366"/>
+                </g>
               </g>
-              <circle class="eye" cx="44" cy="62" r="5" fill="#064E3B"/>
-              <circle class="eye" cx="76" cy="62" r="5" fill="#064E3B"/>
-              <path d="M45 70 C60 82, 76 70, 76 70" stroke="#064E3B" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+              <!-- Gradients -->
+              <defs>
+                <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#E8EEFF"/><stop offset="100%" stop-color="#D1FAE5"/>
+                </linearGradient>
+                <linearGradient id="headGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E5F2FF"/>
+                </linearGradient>
+              </defs>
             </svg>
-
-            <div>
-              <div class="bubble" id="greet"></div>
-              <ul class="list" style="margin:10px 0 0;padding-left:18px">
-                <li>1) Caja chica (manual)</li>
-                <li>2) Horarios de atención</li>
-                <li>Asesor) Derivar a humano</li>
-              </ul>
-            </div>
           </div>
-        </div>
 
+          <!-- Globo de saludo -->
+          <div style="margin-top:12px;background:#E7FFF0;border:1px solid #B7F7CE;color:#065F46;padding:10px 12px;border-radius:12px;max-width:520px">
+            <b>Hola 👋, soy Brunito.</b> Estoy aquí para ayudarte.
+          </div>
+
+          <!-- Listado guía -->
+          <ul style="margin:12px 0 0 18px;color:#1F2937">
+            <li>1) Caja chica (manual)</li>
+            <li>2) Horarios de atención</li>
+            <li>Asesor) Derivar a humano</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section class="cols">
-      <div class="card"><b>Rápido</b><br><small>Respuestas en minutos por WhatsApp.</small></div>
-      <div class="card"><b>Simple</b><br><small>Sin apps nuevas ni registros.</small></div>
-      <div class="card"><b>Escalable</b><br><small>Listo para crecer con más opciones.</small></div>
+    <section style="display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:22px">
+      <div class="card"><b>Rápido</b><br><span class="mut">Respuestas en minutos por WhatsApp.</span></div>
+      <div class="card"><b>Simple</b><br><span class="mut">Sin apps nuevas ni registros.</span></div>
+      <div class="card"><b>Escalable</b><br><span class="mut">Listo para crecer con más opciones.</span></div>
     </section>
 
-    <div class="footer">© OTE-BOT</div>
+    <p style="text-align:center;color:var(--mut);margin:22px 0">© OTE-BOT</p>
   </div>
 
   <!-- FAB + MiniChat -->
@@ -175,7 +235,7 @@
     <div id="transcript" style="max-height:180px;overflow:auto;margin-bottom:10px">
       <div style="display:flex;gap:8px;margin:8px 0">
         <div class="badge">OB</div>
-        <div class="bubble" style="max-width:75%">👋 Escribe tu mensaje o toca una opción.</div>
+        <div style="background:#F1F5F9;border:1px solid #E2E8F0;border-radius:12px;padding:8px 10px">👋 Elige una opción o escribe tu mensaje.</div>
       </div>
     </div>
 
@@ -187,51 +247,43 @@
   </div>
 
 <script>
-  /* ========= CONFIG ========= */
-  const PHONE_NUMBER = "51980122717";  // Perú: 51 + número
-  const BOT_NAME = "OTE-BOT";
-  const BOT_ALIAS = "Bruno";
+  /* ======= CONFIGURA TU NÚMERO ======= */
+  const PHONE_NUMBER = "51980122717"; // Perú: 51 + número
 
-  /* ====== Mensaje de saludo (globo) ====== */
-  const greet = document.getElementById("greet");
-  greet.innerHTML = `Hola 👋, soy <b>${BOT_NAME}</b> (<b>${BOT_ALIAS}</b>).<br>Estoy aquí para ayudarte.`;
-
-  /* ====== Helpers ====== */
+  /* Helpers */
   const wa = (text) => `https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(text)}`;
   const openWA = (text) => window.open(wa(text), "_blank", "noopener");
 
-  // Botones principales
+  // Botones principales coherentes
   document.getElementById("btn-opc1").href = wa("1) Caja chica (manual)");
   document.getElementById("btn-opc2").href = wa("2) Horarios de atención");
   document.getElementById("btn-asesor").href = wa("Derivar a asesor humano");
   document.getElementById("cta").href = wa("Hola, necesito hacer una consulta.");
 
   // FAB toggle
-  const toggle = document.getElementById("toggle");
   const panel = document.getElementById("panel");
-  toggle.addEventListener("click",()=> panel.classList.toggle("open"));
+  document.getElementById("toggle").addEventListener("click",()=> panel.classList.toggle("open"));
 
-  // Chips
+  // Mini-chat
   const chips = document.getElementById("chips");
   const msg = document.getElementById("msg");
   const transcript = document.getElementById("transcript");
+
   chips.addEventListener("click",(e)=>{
-    const el = e.target.closest(".chip");
-    if(!el) return;
+    const el = e.target.closest(".chip"); if(!el) return;
     const t = el.dataset.msg || el.textContent.trim();
     msg.value = t; addUserBubble(t); openWA(t); updateCount();
   });
-
-  // Contador / enviar
-  const count = document.getElementById("count");
-  const updateCount = ()=> count.textContent = (msg.value || "").length;
-  msg.addEventListener("input", updateCount); updateCount();
 
   document.getElementById("send").addEventListener("click", ()=>{
     const text = (msg.value || "Hola, necesito hacer una consulta.").trim();
     if(text){ addUserBubble(text); openWA(text); }
   });
+
   msg.addEventListener("keydown",(e)=>{ if(e.key==="Enter"){ e.preventDefault(); document.getElementById("send").click(); }});
+  const count = document.getElementById("count");
+  const updateCount = ()=> count.textContent = (msg.value || "").length;
+  msg.addEventListener("input", updateCount); updateCount();
 
   function addUserBubble(text){
     const row = document.createElement("div");
@@ -246,3 +298,4 @@
 </script>
 </body>
 </html>
+
