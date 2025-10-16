@@ -48,11 +48,11 @@
   .card{background:var(--card);border:1px solid var(--b);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
   .right{display:grid;place-items:center}
 
-  /* === Robot PRO (versión fija) === */
+  /* === Robot PRO (brazos pegados) === */
   svg.rb-robot { width:min(360px,62vw); height:auto; overflow:visible }
   .rb-idle { animation: rbIdle 4.2s ease-in-out infinite }
   @keyframes rbIdle { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-3px) } }
-  .rb-wave { transform-origin: 240px 150px; animation: rbWave 3.2s ease-in-out infinite }
+  .rb-wave { transform-origin: 208px 166px; animation: rbWave 3.2s ease-in-out infinite }
   @keyframes rbWave { 0%,60%,100%{transform:rotate(0)} 10%{transform:rotate(-10deg)} 20%{transform:rotate(12deg)} 30%{transform:rotate(-8deg)} 40%{transform:rotate(10deg)} 50%{transform:rotate(-6deg)} }
   .rb-eye { transform-origin:center; animation: rbBlink 5s infinite }
   @keyframes rbBlink{ 0%,2%,60%,100%{transform:scaleY(1)} 1%{transform:scaleY(.12)} }
@@ -122,8 +122,8 @@
                width:190px;height:24px;border-radius:50%;
                background:radial-gradient(ellipse at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 65%);"></div>
 
-          <!-- ROBOT PRO (brazos fijados) -->
-          <svg class="rb-robot" viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg" aria-label="Avatar OTE-BOT">
+          <!-- ROBOT PRO (brazos pegados al torso) -->
+          <svg class="rb-robot" viewBox="0 0 360 380" xmlns="http://www.w3.org/2000/svg" aria-label="Avatar OTE-BOT">
             <defs>
               <linearGradient id="rbMetalA" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%"  stop-color="#F9FBFF"/>
@@ -141,63 +141,62 @@
             </defs>
 
             <!-- Grupo raíz: todo respira junto -->
-            <g class="rb-idle">
+            <g class="rb-idle" transform="translate(92,28)">
               <!-- Cabeza -->
-              <g id="rbHead" transform="translate(90,40)">
-                <rect x="0" y="0" rx="26" ry="26" width="140" height="92" fill="url(#rbMetalB)" stroke="#8A94A7"/>
-                <rect x="14" y="18" rx="18" ry="18" width="112" height="56" fill="#0B1220"/>
+              <g id="rbHead" transform="translate(0,0)">
+                <rect x="0" y="0" rx="24" ry="24" width="140" height="92" fill="url(#rbMetalB)" stroke="#8A94A7"/>
+                <rect x="14" y="16" rx="18" ry="18" width="112" height="56" fill="#0B1220"/>
                 <!-- ojos -->
-                <g id="rbEyeL" transform="translate(52,46)">
+                <g id="rbEyeL" transform="translate(52,44)">
                   <circle class="rb-ring" cx="0" cy="0" r="12" fill="none" stroke="#27E0A7" stroke-width="3" />
                   <circle class="rb-eye" cx="0" cy="0" r="6" fill="#12F0BF"/>
                 </g>
-                <g id="rbEyeR" transform="translate(104,46)">
+                <g id="rbEyeR" transform="translate(104,44)">
                   <circle class="rb-ring" cx="0" cy="0" r="12" fill="none" stroke="#27E0A7" stroke-width="3" />
                   <circle class="rb-eye" cx="0" cy="0" r="6" fill="#12F0BF"/>
                 </g>
-                <path d="M40 64 Q70 84 100 64" stroke="#12F0BF" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <path d="M40 62 Q70 82 100 62" stroke="#12F0BF" stroke-width="4" fill="none" stroke-linecap="round"/>
                 <line x1="70" y1="-6" x2="70" y2="-22" stroke="#8A94A7" stroke-width="4"/>
                 <circle cx="70" cy="-28" r="7" fill="#25D366"/>
               </g>
 
-              <!-- Torso + brazos anclados -->
-              <g id="rbTorso" transform="translate(72,128)">
-                <rect x="0" y="0" rx="28" ry="28" width="176" height="122" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                <circle cx="88" cy="60" r="18" fill="url(#rbGlass)" stroke="#96A3B8"/>
-                <rect x="70" y="86" rx="8" width="36" height="10" fill="#B7C3D9"/>
+              <!-- Torso -->
+              <g id="rbTorso" transform="translate(-18,94)">
+                <rect x="18" y="0" rx="28" ry="28" width="176" height="122" fill="url(#rbMetalA)" stroke="#8A94A7"/>
+                <circle cx="106" cy="60" r="18" fill="url(#rbGlass)" stroke="#96A3B8"/>
+                <rect x="88" y="86" rx="8" width="36" height="10" fill="#B7C3D9"/>
                 <g opacity=".6" stroke="#A8B2C2">
-                  <line x1="32" y1="30" x2="144" y2="30"/>
-                  <line x1="32" y1="44" x2="144" y2="44"/>
+                  <line x1="50" y1="30" x2="162" y2="30"/>
+                  <line x1="50" y1="44" x2="162" y2="44"/>
                 </g>
 
-                <!-- Brazo izquierdo -->
-                <g transform="translate(-30,22)">
-                  <circle cx="30" cy="28" r="16" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                  <rect x="22" y="44" rx="10" width="16" height="54" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                  <circle cx="30" cy="104" r="12" fill="#C7D2FE" stroke="#8A94A7"/>
-                  <path d="M22 118 l-6 10 M38 118 l6 10" stroke="#6B7280" stroke-width="3" />
-                </g>
-
-                <!-- Brazo derecho (saludo) -->
-                <g class="rb-wave" transform="translate(210,22)">
+                <!-- ACOPLE EXACTO DE BRAZOS -->
+                <!-- Brazo IZQ (anclado al borde izq del torso) -->
+                <g transform="translate(18,24)">
                   <circle cx="0" cy="28" r="16" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                  <rect x="-8" y="44" rx="10" width="16" height="54" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                  <circle cx="0" cy="104" r="12" fill="#C7D2FE" stroke="#8A94A7"/>
-                  <path d="M-8 118 l-6 10 M8 118 l6 10" stroke="#6B7280" stroke-width="3" />
+                  <rect x="-8" y="44" rx="10" width="16" height="56" fill="url(#rbMetalA)" stroke="#8A94A7"/>
+                  <circle cx="0" cy="106" r="12" fill="#C7D2FE" stroke="#8A94A7"/>
                 </g>
-              </g>
 
-              <!-- Piernas -->
-              <g fill="url(#rbMetalA)" stroke="#8A94A7">
-                <g transform="translate(118,250)">
-                  <circle cx="0" cy="0" r="14"/>
-                  <rect x="-12" y="0" rx="10" width="24" height="56"/>
-                  <rect x="-20" y="56" rx="12" width="40" height="16" fill="#C7D2FE" stroke="#8A94A7"/>
+                <!-- Brazo DER (anclado al borde der del torso) -->
+                <g class="rb-wave" transform="translate(194,24)">
+                  <circle cx="0" cy="28" r="16" fill="url(#rbMetalA)" stroke="#8A94A7"/>
+                  <rect x="-8" y="44" rx="10" width="16" height="56" fill="url(#rbMetalA)" stroke="#8A94A7"/>
+                  <circle cx="0" cy="106" r="12" fill="#C7D2FE" stroke="#8A94A7"/>
                 </g>
-                <g transform="translate(202,250)">
-                  <circle cx="0" cy="0" r="14"/>
-                  <rect x="-12" y="0" rx="10" width="24" height="56"/>
-                  <rect x="-20" y="56" rx="12" width="40" height="16" fill="#C7D2FE" stroke="#8A94A7"/>
+
+                <!-- Piernas (centradas debajo del torso) -->
+                <g fill="url(#rbMetalA)" stroke="#8A94A7" transform="translate(0,0)">
+                  <g transform="translate(70,122)">
+                    <circle cx="0" cy="0" r="14"/>
+                    <rect x="-12" y="0" rx="10" width="24" height="56"/>
+                    <rect x="-20" y="56" rx="12" width="40" height="16" fill="#C7D2FE" stroke="#8A94A7"/>
+                  </g>
+                  <g transform="translate(140,122)">
+                    <circle cx="0" cy="0" r="14"/>
+                    <rect x="-12" y="0" rx="10" width="24" height="56"/>
+                    <rect x="-20" y="56" rx="12" width="40" height="16" fill="#C7D2FE" stroke="#8A94A7"/>
+                  </g>
                 </g>
               </g>
             </g>
@@ -313,7 +312,6 @@
     if(!svg || !eyeL || !eyeR) return;
 
     function move(mx, my, cx, cy){
-      // limita el movimiento del iris
       const dx = Math.max(-3, Math.min(3, (mx - cx) / 30));
       const dy = Math.max(-3, Math.min(3, (my - cy) / 30));
       return `translate(${dx},${dy})`;
@@ -322,10 +320,10 @@
       const pt = svg.createSVGPoint();
       pt.x = e.clientX; pt.y = e.clientY;
       const p = pt.matrixTransform(svg.getScreenCTM().inverse());
-      // convertir a coords locales de la cabeza (traslación 90,40 y ojo en (52,46)/(104,46))
-      const mx = p.x - 90, my = p.y - 40;
-      eyeL.setAttribute("transform", move(mx, my, 52, 46));
-      eyeR.setAttribute("transform", move(mx, my, 104, 46));
+      // ojo coords relativas a la cabeza (traslación 92,28; cabeza en 0,0; ojo L en 52,44; ojo R en 104,44)
+      const mx = p.x - 92, my = p.y - 28;
+      eyeL.setAttribute("transform", move(mx, my, 52, 44));
+      eyeR.setAttribute("transform", move(mx, my, 104, 44));
     }
     window.addEventListener("mousemove", onMove);
     window.addEventListener("touchmove", (e)=>{ if(e.touches[0]) onMove(e.touches[0]); }, {passive:true});
