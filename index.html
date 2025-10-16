@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asistente de Tesorería por WhatsApp</title>
+  <meta name="description" content="Consulta horarios, caja chica y solicita derivación a asesor por WhatsApp." />
+  <meta property="og:title" content="Asistente de Tesorería por WhatsApp" />
+  <meta property="og:description" content="Atención rápida: caja chica, horarios y asesor." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#25D366" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#0AA344;            /* verde principal */
+      --brand-2:#25D366;          /* verde WhatsApp */
+      --dark:#0F172A;             /* texto principal */
+      --muted:#64748B;            /* texto secundario */
+      --bg:#F8FAFC;               /* fondo */
+      --card:#FFFFFF;             /* tarjetas */
+      --border:#E5E7EB;           /* bordes suaves */
+      --radius:18px;
+      --shadow:0 10px 25px rgba(2, 6, 23, .08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--dark);font:16px/1.5 Inter,system-ui,Segoe UI,Arial}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    /* Nav */
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:800}
+    .logo-badge{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#fff}
+    .nav-cta{display:none}
+    @media (min-width:768px){ .nav-cta{display:block} }
+    /* Hero */
+    .hero{
+      position:relative;overflow:hidden;border-radius:calc(var(--radius) * 1.3);
+      background:
+        radial-gradient(1200px 400px at 20% -20%, #CCFBEF 0%, #ECFEFF 30%, transparent 55%),
+        radial-gradient(1000px 500px at 110% 0%, #D1FAE5 0%, transparent 55%),
+        linear-gradient(120deg,#F0FFF4,#F8FFFB 60%);
+      padding:42px 28px;box-shadow:var(--shadow);
+    }
+    .hero-grid{display:grid;gap:22px;align-items:center}
+    @media (min-width:900px){ .hero-grid{grid-template-columns:1.1fr .9fr} }
+    .title{font-size:clamp(28px,4.4vw,44px);line-height:1.05;margin:4px 0 10px;font-weight:800}
+    .subtitle{color:var(--muted);font-size:clamp(15px,2.2vw,18px);margin:0 0 18px}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-size:14px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;
+      font-weight:700;border:1px solid transparent;box-shadow:var(--shadow);transition:.2s transform ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-wa{background:var(--brand-2);color:#053B1E}
+    .btn-ghost{background:#fff;border-color:var(--border);color:var(--dark)}
+    .hint{font-size:13px;color:var(--muted);margin-top:8px}
+    .agent{
+      background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)
+    }
+    .agent .row{display:flex;gap:12px;align-items:center}
+    .agent .avatar{
+      width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,#E2F8E8,#D5F5E3);
+      display:grid;place-items:center;font-weight:800;color:#0A7A3E
+    }
+    .bubble{
+      background:#F0FFF8;border:1px dashed #B7F7CE;color:#065F46;border-radius:14px;padding:10px 12px;font-size:14px
+    }
+    /* Sections */
+    .section{padding:28px 0}
+    .grid{display:grid;gap:18px}
+    @media (min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 6px;font-size:18px}
+    .card p{margin:0;color:var(--muted)}
+    .kicker{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+    .cta-band{
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));
+      color:#062B14;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)
+    }
+    .cta-band .strong{font-weight:800;font-size:20px}
+    .footer{padding:24px 0;color:var(--muted);font-size:13px;text-align:center}
+    /* Small WhatsApp svg */
+    .wa{width:20px;height:20px;display:inline-block}
+  </style>
+  <script>
+    // 👉 CONFIGURA AQUÍ TU NÚMERO Y MENSAJE INICIAL
+    const PHONE_NUMBER = "51980122717
