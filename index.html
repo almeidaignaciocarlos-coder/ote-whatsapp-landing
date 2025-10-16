@@ -1,82 +1,265 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Asistente de Tesorería por WhatsApp</title>
-  <meta name="description" content="Consulta caja chica, horarios y solicita derivación a asesor por WhatsApp." />
-  <meta name="theme-color" content="#25D366" />
-  <style>
-    :root{
-      --brand:#0AA344; --wa:#25D366; --bg:#F7FAFC; --txt:#0F172A;
-      --mut:#64748B; --card:#fff; --b:#E5E7EB; --r:16px;
-      --shadow:0 10px 24px rgba(2,6,23,.08);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial}
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:1100px;margin:0 auto;padding:20px}
-    .nav{display:flex;align-items:center;justify-content:space-between;margin:8px 0 18px}
-    .brand{display:flex;gap:10px;align-items:center;font-weight:800}
-    .badge{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--wa));display:grid;place-items:center;color:#fff;font-weight:800}
-    .hero{background:linear-gradient(135deg,#F0FFF4,#F8FFFB);border:1px solid var(--b);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
-    .grid{display:grid;gap:20px;align-items:center}
-    @media (min-width:900px){.grid{grid-template-columns:1.1fr .9fr}}
-    h1{font-size:clamp(26px,4vw,40px);line-height:1.1;margin:0 0 8px}
-    p{margin:0 0 12px;color:var(--mut)}
-    .btn{display:inline-flex;gap:10px;align-items:center;padding:12px 18px;border-radius:12px;background:var(--wa);color:#053B1E;font-weight:800;box-shadow:var(--shadow)}
-    .btn:hover{filter:brightness(1.02)}
-    .kicker{font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.12em}
-    .card{background:var(--card);border:1px solid var(--b);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
-    .cols{display:grid;gap:14px}
-    @media (min-width:900px){.cols{grid-template-columns:repeat(3,1fr)}}
-    .footer{color:var(--mut);font-size:13px;text-align:center;padding:22px 0}
-    .bubble{background:#F0FFF8;border:1px dashed #B7F7CE;border-radius:12px;padding:10px 12px;color:#065F46;font-size:14px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SIGED · Asistente de Tesorería · WhatsApp</title>
+<meta name="description" content="Asistente virtual SIGED: caja chica, horarios y derivación a asesor por WhatsApp." />
+<meta name="theme-color" content="#0F4C97" />
+<style>
+  :root{
+    /* ===== Colores SIGED (EDITA ESTOS 4) ===== */
+    --siged-azul:       #0F4C97;  /* primario SIGED */
+    --siged-azul-claro: #2F78D1;  /* variantes/degradé */
+    --siged-verde:      #25D366;  /* WhatsApp */
+    --siged-rojo:       #D22630;  /* acento opcional */
+
+    /* ===== Derivados (no tocar) ===== */
+    --bg:#F6F7FB;
+    --txt:#0F172A;
+    --mut:#64748B;
+    --card:#FFFFFF;
+    --b:#E5E7EB;
+    --r:18px;
+    --shadow:0 14px 36px rgba(2,6,23,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:20px}
+
+  /* NAV */
+  .nav{display:flex;align-items:center;justify-content:space-between;margin:6px 0 18px}
+  .brand{display:flex;gap:10px;align-items:center}
+  .escudo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--siged-azul),var(--siged-azul-claro));display:grid;place-items:center;color:#fff;font-weight:900}
+  .titulo{font-weight:800}
+  .subtitulo{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.12em}
+
+  /* HERO */
+  .hero{
+    background:
+      radial-gradient(800px 320px at -10% -10%, color-mix(in oklab, var(--siged-azul) 22%, #fff) 0%, transparent 60%),
+      radial-gradient(900px 420px at 110% -20%, color-mix(in oklab, var(--siged-azul-claro) 18%, #fff) 0%, transparent 60%),
+      linear-gradient(135deg,#FBFEFF,#F4FAFF);
+    border:1px solid var(--b);border-radius:28px;padding:28px;box-shadow:var(--shadow)
+  }
+  .grid{display:grid;gap:22px;align-items:center}
+  @media (min-width:900px){.grid{grid-template-columns:1.05fr .95fr}}
+  h1{font-size:clamp(28px,4.2vw,44px);line-height:1.08;margin:0 0 8px}
+  p{margin:0 0 10px;color:var(--mut)}
+  .kicker{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.14em}
+
+  .btn{
+    display:inline-flex;gap:10px;align-items:center;padding:12px 18px;border-radius:12px;
+    background:var(--siged-verde);color:#053B1E;font-weight:800;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.05)
+  }
+  .btn:hover{filter:brightness(1.05)}
+
+  /* Tarjeta chat demo */
+  .card{background:var(--card);border:1px solid var(--b);border-radius:20px;padding:16px;box-shadow:var(--shadow)}
+  .bot{display:flex;gap:12px;align-items:center}
+  .robot{width:92px;height:92px}
+  .bubble{background:#F0FFF8;border:1px solid #B7F7CE;border-radius:14px;padding:10px 12px;color:#065F46;font-size:14px}
+  .list{margin:10px 0 0;padding-left:18px}
+
+  /* Robot animaciones */
+  .eye{transform-origin:center;animation:blink 5s infinite}
+  @keyframes blink{0%,2%,60%,100%{transform:scaleY(1)}1%{transform:scaleY(.1)}}
+  .bot-body{animation:breath 4s ease-in-out infinite}
+  @keyframes breath{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  .typing{display:inline-flex;gap:4px;align-items:center;margin-left:6px}
+  .dot{width:6px;height:6px;border-radius:50%;background:#10B981;opacity:.4;animation:jump 1.2s infinite}
+  .dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+  @keyframes jump{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(-4px);opacity:.9}}
+
+  /* Features */
+  .cols{display:grid;gap:14px;margin-top:22px}
+  @media (min-width:900px){.cols{grid-template-columns:repeat(3,1fr)}}
+  .card small{color:var(--mut)}
+
+  /* FAB y MiniChat */
+  .fab{position:fixed;right:18px;bottom:18px;z-index:60}
+  .fab button{
+    width:64px;height:64px;border:0;cursor:pointer;border-radius:50%;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--siged-azul),var(--siged-azul-claro));color:#fff;
+    box-shadow:0 18px 40px color-mix(in oklab, var(--siged-azul) 40%, transparent);
+    font-size:26px;animation:pulse 2s infinite
+  }
+  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
+
+  .panel{
+    position:fixed;right:18px;bottom:96px;width:min(92vw,360px);background:#fff;border:1px solid var(--b);
+    border-radius:18px;box-shadow:var(--shadow);padding:14px;z-index:70;display:none
+  }
+  .panel.open{display:block}
+  .panel-h{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+  .badge{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--siged-azul),var(--siged-azul-claro));display:grid;place-items:center;color:#fff;font-weight:800}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
+  .chip{background:#EEF2F7;border:1px solid #E2E8F0;color:#0F172A;padding:6px 10px;border-radius:999px;font-size:13px;cursor:pointer}
+  .chip:hover{border-color:var(--siged-azul); color:var(--siged-azul)}
+  .composer{display:flex;gap:8px}
+  .composer input{
+    flex:1;border:1px solid #CBD5E1;border-radius:12px;padding:10px 12px;font:inherit
+  }
+  .send{background:var(--siged-azul);color:#fff;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
+  .send:hover{filter:brightness(1.05)}
+  .counter{font-size:12px;color:var(--mut);text-align:right;margin-top:6px}
+
+  .footer{color:var(--mut);font-size:13px;text-align:center;padding:24px 0}
+</style>
 </head>
 <body>
   <div class="wrap">
     <div class="nav">
       <div class="brand">
-        <div class="badge">TE</div>
-        <div>Asistente de Tesorería</div>
+        <div class="escudo">SG</div>
+        <div>
+          <div class="titulo">SIGED · Asistente de Tesorería</div>
+          <div class="subtitulo">OGAF – OTE · MININTER</div>
+        </div>
       </div>
     </div>
 
     <section class="hero">
       <div class="grid">
         <div>
-          <div class="kicker">WhatsApp</div>
-          <h1>Consulta con el asistente al instante</h1>
+          <div class="kicker">ChatBot · WhatsApp</div>
+          <h1>Habla con el asistente <br>al instante</h1>
           <p>Responde sobre <b>caja chica</b>, <b>horarios</b> y puede <b>derivar a un asesor humano</b>.</p>
-          <!-- 👇 CAMBIA SOLO EL NÚMERO (Perú: 51 + número) y el texto -->
-          <p style="margin-top:14px">
-            <a class="btn" id="wa-btn" href="https://api.whatsapp.com/send?phone=51980122717&text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20Caja%20Chica." target="_blank" rel="noopener">
-              💬 Hablar por WhatsApp
-            </a>
+          <p style="margin:14px 0 2px">
+            <a id="cta" class="btn" target="_blank" rel="noopener">💬 Hablar por WhatsApp</a>
           </p>
-          <p class="kicker" style="margin-top:8px;">Atención L–V 08:00–16:00</p>
+          <p class="kicker">Atención L–V 08:00–16:00</p>
         </div>
+
         <div class="card">
-          <div class="bubble">Hola 👋 soy tu asistente virtual. ¿En qué te ayudo hoy?</div>
-          <ul>
-            <li>1) Enviar manual de Caja Chica</li>
-            <li>2) Consultar horario de atención</li>
-            <li>Asesor) Derivar a asesor humano</li>
-          </ul>
+          <div class="bot">
+            <!-- ROBOT -->
+            <svg class="robot" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#C7DDF5"/><stop offset="100%" stop-color="#B7F7CE"/>
+                </linearGradient>
+              </defs>
+              <g class="bot-body">
+                <rect x="20" y="32" rx="18" ry="18" width="80" height="60" fill="url(#g)" stroke="var(--siged-azul)" />
+                <circle cx="60" cy="24" r="6" fill="var(--siged-azul)"/>
+                <rect x="40" y="76" rx="6" ry="6" width="16" height="12" fill="var(--siged-azul)" opacity=".6"/>
+                <rect x="64" y="76" rx="6" ry="6" width="16" height="12" fill="var(--siged-azul)" opacity=".6"/>
+              </g>
+              <circle class="eye" cx="44" cy="58" r="5" fill="#073B27"/>
+              <circle class="eye" cx="76" cy="58" r="5" fill="#073B27"/>
+              <path d="M45 66 C60 78, 76 66, 76 66" stroke="#073B27" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <div class="bubble">
+                Hola 👋 soy el asistente SIGED. ¿En qué te ayudo hoy?
+                <span class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+              </div>
+              <ul class="list">
+                <li>1) Manual de Caja Chica</li>
+                <li>2) Horario de atención</li>
+                <li>Asesor) Derivar a asesor humano</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section style="padding:22px 0">
-      <div class="cols">
-        <div class="card"><b>Rápido</b><br><span class="mut">Respuestas en minutos por WhatsApp.</span></div>
-        <div class="card"><b>Simple</b><br><span class="mut">Sin apps nuevas ni registros.</span></div>
-        <div class="card"><b>Escalable</b><br><span class="mut">Listo para crecer con más opciones.</span></div>
-      </div>
+    <section class="cols">
+      <div class="card"><b>Rápido</b><br><small>Respuestas en minutos por WhatsApp.</small></div>
+      <div class="card"><b>Simple</b><br><small>Sin apps nuevas ni registros.</small></div>
+      <div class="card"><b>Escalable</b><br><small>Listo para crecer con más opciones.</small></div>
     </section>
 
-    <div class="footer">© Oficina de Tesorería — MININTER</div>
+    <div class="footer">© SIGED – Oficina de Tesorería · MININTER</div>
   </div>
+
+  <!-- FAB + MiniChat -->
+  <div class="fab"><button id="toggle" aria-label="Abrir chat">✉️</button></div>
+
+  <div class="panel" id="panel" aria-live="polite">
+    <div class="panel-h">
+      <div class="badge">SG</div>
+      <div>
+        <div style="font-weight:800">SIGED · Asistente</div>
+        <div style="font-size:12px;color:var(--mut)">Responde en horario de oficina</div>
+      </div>
+    </div>
+
+    <div class="chips" id="chips">
+      <span class="chip">Manual de Caja Chica</span>
+      <span class="chip">Horario de atención</span>
+      <span class="chip">Derivar a asesor humano</span>
+      <span class="chip">Estado de trámite de pago</span>
+    </div>
+
+    <div id="transcript" style="max-height:180px;overflow:auto;margin-bottom:10px">
+      <div style="display:flex;gap:8px;margin:8px 0">
+        <div class="badge">SG</div>
+        <div class="bubble" style="max-width:75%">¡Hola! Escribe tu consulta y te llevamos a WhatsApp con el mensaje listo 👇</div>
+      </div>
+    </div>
+
+    <div class="composer">
+      <input id="msg" type="text" placeholder="Escribe tu consulta…" maxlength="500" />
+      <button id="send" class="send">Enviar</button>
+    </div>
+    <div class="counter"><span id="count">0</span>/500 caracteres</div>
+  </div>
+
+<script>
+  /* ===== CONFIG ===== */
+  const PHONE_NUMBER = "51980122717"; // Perú: 51 + número
+  const DEFAULT_TEXT = "Hola, necesito información sobre Caja Chica.";
+
+  /* Helpers */
+  const waLink = (text) =>
+    `https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(text || DEFAULT_TEXT)}`;
+
+  document.getElementById("cta").href = waLink(DEFAULT_TEXT);
+
+  const toggle = document.getElementById("toggle");
+  const panel = document.getElementById("panel");
+  toggle.addEventListener("click",()=> panel.classList.toggle("open"));
+
+  const chips = document.getElementById("chips");
+  const msg = document.getElementById("msg");
+  const transcript = document.getElementById("transcript");
+
+  chips.addEventListener("click",(e)=>{
+    if(!e.target.classList.contains("chip")) return;
+    const t = e.target.textContent.trim();
+    msg.value = t;
+    addUserBubble(t);
+    updateCount();
+  });
+
+  const count = document.getElementById("count");
+  const updateCount = ()=> count.textContent = (msg.value || "").length;
+  msg.addEventListener("input", updateCount); updateCount();
+
+  document.getElementById("send").addEventListener("click", ()=>{
+    const text = (msg.value || DEFAULT_TEXT).trim();
+    if(text) addUserBubble(text);
+    window.open(waLink(text), "_blank", "noopener");
+  });
+
+  msg.addEventListener("keydown", (e)=>{
+    if(e.key==="Enter"){ e.preventDefault(); document.getElementById("send").click(); }
+  });
+
+  function addUserBubble(text){
+    const row = document.createElement("div");
+    row.style.display="flex"; row.style.justifyContent="flex-end"; row.style.margin="8px 0";
+    const bubble = document.createElement("div");
+    bubble.textContent = text;
+    bubble.style.maxWidth="75%"; bubble.style.background="#EAF1FF"; bubble.style.border="1px solid #CBD5FF";
+    bubble.style.color="var(--siged-azul)"; bubble.style.borderRadius="14px"; bubble.style.padding="8px 10px";
+    transcript.appendChild(row); row.appendChild(bubble);
+    transcript.scrollTop = transcript.scrollHeight;
+  }
+</script>
 </body>
 </html>
