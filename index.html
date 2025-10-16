@@ -48,27 +48,20 @@
   .card{background:var(--card);border:1px solid var(--b);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
   .right{display:grid;place-items:center}
 
-  /* === Robot PRO (brazos pegados) === */
-  svg.rb-robot { width:min(360px,62vw); height:auto; overflow:visible }
-  .rb-idle { animation: rbIdle 4.2s ease-in-out infinite }
-  @keyframes rbIdle { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-3px) } }
-  .rb-wave { transform-origin: 208px 166px; animation: rbWave 3.2s ease-in-out infinite }
-  @keyframes rbWave { 0%,60%,100%{transform:rotate(0)} 10%{transform:rotate(-10deg)} 20%{transform:rotate(12deg)} 30%{transform:rotate(-8deg)} 40%{transform:rotate(10deg)} 50%{transform:rotate(-6deg)} }
-  .rb-eye { transform-origin:center; animation: rbBlink 5s infinite }
-  @keyframes rbBlink{ 0%,2%,60%,100%{transform:scaleY(1)} 1%{transform:scaleY(.12)} }
-  .rb-ring { animation: rbGlow 2.4s ease-in-out infinite }
-  @keyframes rbGlow { 0%,100%{opacity:.35} 50%{opacity:1} }
-  .rb-shadow { filter:blur(2px) }
+  /* ROBOT ESTÁTICO + CENTRADO */
+  .robot-wrap{width:100%;display:grid;place-items:center}
+  svg.robot{width:min(360px,62vw);height:auto}
+  .shadow {width:190px;height:24px;border-radius:50%;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 65%);
+    filter:blur(2px);margin:10px auto 0}
 
   /* FAB + MINI-CHAT */
   .fab{position:fixed;right:18px;bottom:18px;z-index:60}
   .fab button{
     width:64px;height:64px;border:0;cursor:pointer;border-radius:50%;display:grid;place-items:center;
     background:var(--wa);color:#053B1E;box-shadow:0 18px 40px rgba(37,211,102,.45);
-    font-size:26px;animation:pulse 2s infinite
+    font-size:26px;
   }
-  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
-
   .panel{
     position:fixed;right:18px;bottom:96px;width:min(92vw,360px);background:#fff;border:1px solid var(--b);
     border-radius:18px;box-shadow:var(--shadow);padding:14px;z-index:70;display:none
@@ -82,7 +75,6 @@
   .composer{display:flex;gap:8px;align-items:center}
   .composer input{flex:1;border:1px solid #CBD5E1;border-radius:12px;padding:10px 12px;font:inherit}
   .send{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
-  .send:hover{filter:brightness(1.05)}
   .counter{font-size:12px;color:var(--mut);text-align:right;margin-top:6px}
 </style>
 </head>
@@ -100,7 +92,7 @@
 
     <section class="hero">
       <div class="grid">
-        <!-- Columna izquierda -->
+        <!-- izquierda -->
         <div>
           <div class="kicker">ChatBot · WhatsApp</div>
           <h1>Habla con el asistente al instante</h1>
@@ -116,44 +108,38 @@
           <p class="kicker">Atención L–V 08:00–16:00</p>
         </div>
 
-        <!-- Columna derecha: Robot + saludo + lista -->
-        <div class="card right" style="position:relative">
-          <div class="rb-shadow" style="position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);
-               width:190px;height:24px;border-radius:50%;
-               background:radial-gradient(ellipse at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 65%);"></div>
+        <!-- derecha (robot estático centrado) -->
+        <div class="card right">
+          <div class="robot-wrap">
+            <svg class="robot" viewBox="0 0 360 380" xmlns="http://www.w3.org/2000/svg" aria-label="OTE-BOT">
+              <defs>
+                <linearGradient id="metalA" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%"  stop-color="#F9FBFF"/>
+                  <stop offset="50%" stop-color="#E6ECF6"/>
+                  <stop offset="100%" stop-color="#CFD7E6"/>
+                </linearGradient>
+                <linearGradient id="metalB" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%"  stop-color="#E8EEF8"/>
+                  <stop offset="100%" stop-color="#FFFFFF"/>
+                </linearGradient>
+                <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%"  stop-color="#BFE7FF"/>
+                  <stop offset="100%" stop-color="#E4FFF2"/>
+                </linearGradient>
+              </defs>
 
-          <!-- ROBOT PRO (brazos pegados al torso) -->
-          <svg class="rb-robot" viewBox="0 0 360 380" xmlns="http://www.w3.org/2000/svg" aria-label="Avatar OTE-BOT">
-            <defs>
-              <linearGradient id="rbMetalA" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%"  stop-color="#F9FBFF"/>
-                <stop offset="50%" stop-color="#E6ECF6"/>
-                <stop offset="100%" stop-color="#CFD7E6"/>
-              </linearGradient>
-              <linearGradient id="rbMetalB" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%"  stop-color="#E8EEF8"/>
-                <stop offset="100%" stop-color="#FFFFFF"/>
-              </linearGradient>
-              <linearGradient id="rbGlass" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%"  stop-color="#BFE7FF"/>
-                <stop offset="100%" stop-color="#E4FFF2"/>
-              </linearGradient>
-            </defs>
-
-            <!-- Grupo raíz: todo respira junto -->
-            <g class="rb-idle" transform="translate(92,28)">
               <!-- Cabeza -->
-              <g id="rbHead" transform="translate(0,0)">
-                <rect x="0" y="0" rx="24" ry="24" width="140" height="92" fill="url(#rbMetalB)" stroke="#8A94A7"/>
+              <g transform="translate(110,40)">
+                <rect x="0" y="0" rx="24" ry="24" width="140" height="92" fill="url(#metalB)" stroke="#8A94A7"/>
                 <rect x="14" y="16" rx="18" ry="18" width="112" height="56" fill="#0B1220"/>
                 <!-- ojos -->
-                <g id="rbEyeL" transform="translate(52,44)">
-                  <circle class="rb-ring" cx="0" cy="0" r="12" fill="none" stroke="#27E0A7" stroke-width="3" />
-                  <circle class="rb-eye" cx="0" cy="0" r="6" fill="#12F0BF"/>
+                <g transform="translate(52,44)">
+                  <circle cx="0" cy="0" r="12" fill="none" stroke="#27E0A7" stroke-width="3" />
+                  <circle cx="0" cy="0" r="6" fill="#12F0BF"/>
                 </g>
-                <g id="rbEyeR" transform="translate(104,44)">
-                  <circle class="rb-ring" cx="0" cy="0" r="12" fill="none" stroke="#27E0A7" stroke-width="3" />
-                  <circle class="rb-eye" cx="0" cy="0" r="6" fill="#12F0BF"/>
+                <g transform="translate(104,44)">
+                  <circle cx="0" cy="0" r="12" fill="none" stroke="#27E0A7" stroke-width="3" />
+                  <circle cx="0" cy="0" r="6" fill="#12F0BF"/>
                 </g>
                 <path d="M40 62 Q70 82 100 62" stroke="#12F0BF" stroke-width="4" fill="none" stroke-linecap="round"/>
                 <line x1="70" y1="-6" x2="70" y2="-22" stroke="#8A94A7" stroke-width="4"/>
@@ -161,49 +147,48 @@
               </g>
 
               <!-- Torso -->
-              <g id="rbTorso" transform="translate(-18,94)">
-                <rect x="18" y="0" rx="28" ry="28" width="176" height="122" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                <circle cx="106" cy="60" r="18" fill="url(#rbGlass)" stroke="#96A3B8"/>
-                <rect x="88" y="86" rx="8" width="36" height="10" fill="#B7C3D9"/>
+              <g transform="translate(92,134)">
+                <rect x="0" y="0" rx="28" ry="28" width="176" height="122" fill="url(#metalA)" stroke="#8A94A7"/>
+                <circle cx="88" cy="60" r="18" fill="url(#glass)" stroke="#96A3B8"/>
+                <rect x="70" y="86" rx="8" width="36" height="10" fill="#B7C3D9"/>
                 <g opacity=".6" stroke="#A8B2C2">
-                  <line x1="50" y1="30" x2="162" y2="30"/>
-                  <line x1="50" y1="44" x2="162" y2="44"/>
+                  <line x1="32" y1="30" x2="144" y2="30"/>
+                  <line x1="32" y1="44" x2="144" y2="44"/>
                 </g>
 
-                <!-- ACOPLE EXACTO DE BRAZOS -->
-                <!-- Brazo IZQ (anclado al borde izq del torso) -->
-                <g transform="translate(18,24)">
-                  <circle cx="0" cy="28" r="16" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                  <rect x="-8" y="44" rx="10" width="16" height="56" fill="url(#rbMetalA)" stroke="#8A94A7"/>
+                <!-- Brazo izq fijo -->
+                <g transform="translate(-30,24)">
+                  <circle cx="30" cy="28" r="16" fill="url(#metalA)" stroke="#8A94A7"/>
+                  <rect x="22" y="44" rx="10" width="16" height="56" fill="url(#metalA)" stroke="#8A94A7"/>
+                  <circle cx="30" cy="106" r="12" fill="#C7D2FE" stroke="#8A94A7"/>
+                </g>
+                <!-- Brazo der fijo -->
+                <g transform="translate(194,24)">
+                  <circle cx="0" cy="28" r="16" fill="url(#metalA)" stroke="#8A94A7"/>
+                  <rect x="-8" y="44" rx="10" width="16" height="56" fill="url(#metalA)" stroke="#8A94A7"/>
                   <circle cx="0" cy="106" r="12" fill="#C7D2FE" stroke="#8A94A7"/>
                 </g>
 
-                <!-- Brazo DER (anclado al borde der del torso) -->
-                <g class="rb-wave" transform="translate(194,24)">
-                  <circle cx="0" cy="28" r="16" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                  <rect x="-8" y="44" rx="10" width="16" height="56" fill="url(#rbMetalA)" stroke="#8A94A7"/>
-                  <circle cx="0" cy="106" r="12" fill="#C7D2FE" stroke="#8A94A7"/>
-                </g>
-
-                <!-- Piernas (centradas debajo del torso) -->
-                <g fill="url(#rbMetalA)" stroke="#8A94A7" transform="translate(0,0)">
-                  <g transform="translate(70,122)">
+                <!-- Piernas -->
+                <g fill="url(#metalA)" stroke="#8A94A7">
+                  <g transform="translate(46,122)">
                     <circle cx="0" cy="0" r="14"/>
                     <rect x="-12" y="0" rx="10" width="24" height="56"/>
                     <rect x="-20" y="56" rx="12" width="40" height="16" fill="#C7D2FE" stroke="#8A94A7"/>
                   </g>
-                  <g transform="translate(140,122)">
+                  <g transform="translate(116,122)">
                     <circle cx="0" cy="0" r="14"/>
                     <rect x="-12" y="0" rx="10" width="24" height="56"/>
                     <rect x="-20" y="56" rx="12" width="40" height="16" fill="#C7D2FE" stroke="#8A94A7"/>
                   </g>
                 </g>
               </g>
-            </g>
-          </svg>
+            </svg>
 
-          <!-- Saludo -->
-          <div style="margin-top:12px;background:#E7FFF0;border:1px solid #B7F7CE;color:#065F46;padding:10px 12px;border-radius:12px;max-width:520px">
+            <div class="shadow"></div>
+          </div>
+
+          <div style="margin-top:12px;background:#E7FFF0;border:1px solid #B7F7CE;color:#065F46;padding:10px 12px;border-radius:12px;max-width:520px;text-align:center">
             <b>Hola 👋, soy OTE-BOT (Bruno).</b> Estoy aquí para ayudarte.
           </div>
 
@@ -261,7 +246,7 @@
   /* ========= CONFIGURA TU NÚMERO ========= */
   const PHONE_NUMBER = "51980122717"; // Perú: 51 + número
 
-  /* ===== WhatsApp helpers ===== */
+  /* WhatsApp helpers */
   const wa = (text) => `https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(text)}`;
   const setHref = (id, text) => document.getElementById(id).setAttribute("href", wa(text));
 
@@ -270,7 +255,7 @@
   setHref("btn-asesor", "Derivar a asesor humano");
   setHref("cta", "Hola, necesito hacer una consulta.");
 
-  /* ===== Mini-chat ===== */
+  /* Mini-chat */
   const panel = document.getElementById("panel");
   document.getElementById("toggle").addEventListener("click",()=> panel.classList.toggle("open"));
 
@@ -303,31 +288,6 @@
     transcript.appendChild(row); row.appendChild(bubble);
     transcript.scrollTop = transcript.scrollHeight;
   }
-
-  /* ===== Seguimiento de ojos ===== */
-  (function eyeFollow(){
-    const svg = document.querySelector("svg.rb-robot");
-    const eyeL = document.querySelector("#rbEyeL .rb-eye");
-    const eyeR = document.querySelector("#rbEyeR .rb-eye");
-    if(!svg || !eyeL || !eyeR) return;
-
-    function move(mx, my, cx, cy){
-      const dx = Math.max(-3, Math.min(3, (mx - cx) / 30));
-      const dy = Math.max(-3, Math.min(3, (my - cy) / 30));
-      return `translate(${dx},${dy})`;
-    }
-    function onMove(e){
-      const pt = svg.createSVGPoint();
-      pt.x = e.clientX; pt.y = e.clientY;
-      const p = pt.matrixTransform(svg.getScreenCTM().inverse());
-      // ojo coords relativas a la cabeza (traslación 92,28; cabeza en 0,0; ojo L en 52,44; ojo R en 104,44)
-      const mx = p.x - 92, my = p.y - 28;
-      eyeL.setAttribute("transform", move(mx, my, 52, 44));
-      eyeR.setAttribute("transform", move(mx, my, 104, 44));
-    }
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("touchmove", (e)=>{ if(e.touches[0]) onMove(e.touches[0]); }, {passive:true});
-  })();
 </script>
 </body>
 </html>
